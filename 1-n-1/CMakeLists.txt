@@ -6,21 +6,6 @@
 #                  copied verbatim in the file "LICENSE"                       #
 ################################################################################
 
-Set(INCLUDE_DIRECTORIES
-  ${FairMQ_INCDIR}/fairmq
-  ${FairLogger_INCDIR}
-  ${Boost_INCLUDE_DIRS}
-)
-
-Include_Directories(${INCLUDE_DIRECTORIES})
-
-Set(LINK_DIRECTORIES
-  ${FairMQ_LIBDIR}
-  ${Boost_LIBRARY_DIRS}
-)
-
-Link_Directories(${LINK_DIRECTORIES})
-
 add_library(Example1N1Lib STATIC
     "Sampler.cxx"
     "Sampler.h"
@@ -30,7 +15,7 @@ add_library(Example1N1Lib STATIC
     "Sink.h"
 )
 
-target_link_libraries(Example1N1Lib PUBLIC FairMQ FairLogger boost_program_options boost_system)
+target_link_libraries(Example1N1Lib PUBLIC FairMQ::FairMQ)
 
 add_executable(fairmq-ex-1-n-1-sampler runSampler.cxx)
 target_link_libraries(fairmq-ex-1-n-1-sampler PRIVATE Example1N1Lib)
@@ -45,7 +30,7 @@ add_custom_target(Example1N1 DEPENDS fairmq-ex-1-n-1-sampler fairmq-ex-1-n-1-pro
 
 set(EX_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
 set(EX_CONF_DIR ${CMAKE_CURRENT_BINARY_DIR})
-set(FAIRMQ_BIN_DIR ${CMAKE_BINARY_DIR}/fairmq)
+set(FAIRMQ_BIN_DIR ${FairMQ_BINDIR})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fairmq-start-ex-1-n-1.sh.in ${CMAKE_CURRENT_BINARY_DIR}/fairmq-start-ex-1-n-1.sh)
 
@@ -79,7 +64,7 @@ install(
 # configure run script with different executable paths for build and for install directories
 set(EX_BIN_DIR ${CMAKE_INSTALL_PREFIX}/${PROJECT_INSTALL_BINDIR})
 set(EX_CONF_DIR ${CMAKE_INSTALL_PREFIX}/${PROJECT_INSTALL_DATADIR})
-set(FAIRMQ_BIN_DIR ${CMAKE_INSTALL_PREFIX}/${PROJECT_INSTALL_BINDIR}/fairmq)
+set(FAIRMQ_BIN_DIR ${FairMQ_BINDIR})
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fairmq-start-ex-1-n-1.sh.in ${CMAKE_CURRENT_BINARY_DIR}/fairmq-start-ex-1-n-1.sh_install)
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/fairmq-start-ex-1-n-1.sh_install

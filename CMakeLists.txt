@@ -9,7 +9,7 @@ set(CMAKE_PREFIX_PATH $ENV{FAIRMQ_DIR} ${CMAKE_PREFIX_PATH})
 find_package(FairMQ)
 if(FairMQ_FOUND)
   find_package(FairLogger ${FairMQ_FairLogger_VERSION})
-  find_package(Boost ${FairMQ_Boost_VERSION} COMPONENTS ${FairMQ_BOOST_COMPONENTS})
+  find_package(Boost ${FairMQ_Boost_VERSION} COMPONENTS ${FairMQ_Boost_COMPONENTS})
 endif()
 
 
